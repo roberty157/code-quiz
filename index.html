@@ -7,14 +7,48 @@
         <link rel="stylesheet" type="text/css" href="./assets/css/style.css" />
     </head>
     <body>
-        <header><div><a>High Scores</a></div><div id="timeLeft">Time: <span id="timer">5</span></div></header>
+        <header><div><a id="highScoreLink" href="">View High Scores</a></div><div id="timer">Time: <span id="secondsLeft">20</span></div></header>
         <main>
-            <div id="question">Coding Quiz Challenge</div>
-            <div id="startButton"></div>
-            <div id="score"></div>
-            <ol id="responses"></ol>
+            <div id="highScoreBlock">
+                <h1>High Scores</h1>
+                <ol id="scoreList"></ol>
+                <div id="scorePageButtons"></div>
+            </div>
+
+
+            <div id="introBlock">
+                <h1>Coding Quiz Challenge</h1>
+                <div id="introButtonBlock"></div>
+            </div>
+
+
+            <div id="endBlock">
+                <h1 id="message"></h1>
+                <div>
+                    Score: <span id="score"></span>
+                </div>
+                <div id="submitForm">
+                    <form id="initials-form">
+                        Enter initials: <input type="text" class="form-input w-100" id="initial-input" name="initials-input" placeholder="Enter initials" />
+                        <button class="btn btn-info">Submit</button>
+                      </form>
+                </div>
+            </div>
+            
+
+            <div id="questionBlock">
+                <div id="question"></div>
+                <ol id="responses"></ol>
+                <hr>
+                <div id="result"></div>
+            </div>
+
+            
+            
             
         </main>
-        <script src="assets/js/script.js"></script>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="assets/js/script2.js"></script>
     </body>
 </html>

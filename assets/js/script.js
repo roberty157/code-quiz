@@ -1,21 +1,46 @@
-var responsesEl = document.querySelector("#responses");
-var questionEl = document.querySelector("#question");
-var timerEl = document.querySelector("#timer");
-var scoreEl = document.querySelector("#score");
-var mainEl = document.querySelector("main");
+var responsesEl = $("#responses");
+var questionEl = $("#question");
+var timerEl = $("#timer");
+var scoreEl = $("#score");
+console.log(scoreEl);
+var scoreBlockEl = $("#scoreBlock");
+var mainEl = $("main");
 
-var result = document.querySelector("#result");
-var startButton = document.createElement("button");
-startButton.textContent = "start";
-startButton.addEventListener("click", function(){
-    
-    startButton.style.display="none";
+var introEl = $("#introduction");
+
+var questionBlockEl = $("#questionBlock");
+
+var highScoreLinkEl = $("#highScoreLink");
+
+
+var resultEl = $("#result");
+var highScoreBlock =$("#highScoreBlock");
+
+
+
+var startButton = $("<button>");
+startButton.text("start");
+
+
+highScoreLinkEl.on("click", function(event){
+    event.preventDefault();
+    //questionEl.text("High Scores");
+    highScoreBlock.css("display","block");
+    introEl.css("display","none");
+    scoreEl.css("display","none");
+    startButton.css("display","none");
+});
+
+
+startButton.on("click", function(){
+    console.log("button clicked");
+    startButton.css("display","none");
     //countdown();
-
+    introEl.text("");
 
     init();
 });
-document.querySelector("#startButton").appendChild(startButton);
+$("#startButton").append(startButton);
 
 
 //generate random int between 0 and max, less than but not equal to max
@@ -82,24 +107,37 @@ function countdown(){
     },1000);
 }
 */
+function showScore(score,message){
+    resultEl.text("");
+    
+    scoreBlockEl.attr("display","block");
+    introEl.text(message);
+    scoreEl.text(score);
+    //make go back button
 
+}
 function init(){
 
     var score = 0;
 
-    var timeLeft = 5;
+    var timeLeft = 10;
     var timeInterval = setInterval(function(){
-        timerEl.textContent = timeLeft;
         
-        if(timeLeft === 0){
-            clearInterval(timeInterval);
-            timerEl = "";
-            responsesEl.textContent = "";
-            questionEl.textContent="";
-            questionEl.textContent ="Ran Out of Time";
-            scoreEl.textContent = score;
-        }
+        
         timeLeft--;
+        timerEl.text(timeLeft);
+
+        if(timeLeft === 0){
+
+            clearInterval(timeInterval);
+            timerEl.text("0");
+            responsesEl.text("");
+            questionEl.text("");
+            //questionEl.textContent ="Ran Out of Time";
+            //scoreEl.textContent = score;
+            showScore(score,"Ran out of time");
+        }
+        
     },1000);
 
 
@@ -109,19 +147,20 @@ function init(){
 
     var questions = [q0,q1,q2];
     function genQuestion(){
-        responsesEl.textContent = "";
-        questionEl.textContent="";
+        responsesEl.text("");
+        questionEl.text("");
         if(questions.length ===0){
             console.log("quiz finished");
-            questionEl.textContent ="Quiz finished";
+            //questionEl.textContent ="Quiz finished";
             clearInterval(timeInterval);
-            scoreEl.textContent = score;
+            //scoreEl.textContent = score;
+            showScore(score,"You're all done");
         }
         else{
             var randomIntQ = getRandomInt(questions.length);
             var qObj = questions[randomIntQ];
             questions.splice(randomIntQ,1);
-            questionEl.textContent = qObj["question"];
+            questionEl.text(qObj["question"]);
             var responses = qObj.responseLst;
         
             
@@ -129,40 +168,44 @@ function init(){
             //console.log(responses);
             //console.log(responses);
             for(var i=0;i<4;i++){
-            const responseEl = document.createElement("li");
+            const responseEl = $("<li>");
             
 
             var index = getRandomInt(responses.length);
-            responseEl.textContent = responses[index].response;
+            responseEl.text(responses[index].response);
 
             const responseObj = responses[index];
-            responseEl.addEventListener("click",function(){
+            responseEl.on("click",function(){
                 //console.log(responseEl.textContent);
 
                 if(questions.length > 0){
-                    const resultEl = document.createElement("div");
-                    resultEl.id="result";
+                    //resultEl = $("<div>");
+                    //resultEl.attr("id","result");
                     if(responseObj.correct === true){
-                        resultEl.textContent = "Correct";
+                        resultEl.text("Correct");
                         //add one to the score
                         score++;
                     }else{
-                        resultEl.textContent = "Wrong";
+                        resultEl.text("Wrong");
                     }
                     //console.log(responseObj);
-                    mainEl.appendChild(resultEl);
+                    //questionBlockEl.append(resultEl);
                     setTimeout(function(){
-                        mainEl.removeChild(resultEl);
-                    },2400);
+                        resultEl.text("");
+
+                        //console.log(questionEl.children());
+                        //questionBlockEl.children(resultEl).remove();
+                    },1500);
                 }
                 
                 genQuestion();
             });
 
             responses.splice(index,1);
-            responsesEl.appendChild(responseEl);
+            responsesEl.append(responseEl);
             }
         }
     }
     genQuestion();
 }
+
