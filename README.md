@@ -9,4 +9,4 @@ Live at:
 
 https://roberty157.github.io/code-quiz/
 
-![Alt text](C:\Users\rober\UCIBootCamp\code-quiz\assets\images\roberty157.github.io_code-quiz_.png?raw=true "Title")
+![Alt text](assets/images/roberty157.github.io_code-quiz_.png?raw=true "Title")
